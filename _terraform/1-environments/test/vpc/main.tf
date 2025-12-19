@@ -2,7 +2,7 @@
 
 module "this" {
   source  = "dasmeta/vpc/aws"
-  version = "2.15.1"
+  version = "1.0.2"
 
   availabilyty_zones = "-\"ey-central-1a\" -\"ey-central-1b\" -\"ey-central-1c\""
   cidr = "10.16.0.0/24"

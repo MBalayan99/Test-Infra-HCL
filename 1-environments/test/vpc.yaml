@@ -1,5 +1,5 @@
 source: dasmeta/vpc/aws
-version: 2.15.1
+version: 1.0.2
 variables:
   names:  "test-vpc"
   availabilyty_zones:

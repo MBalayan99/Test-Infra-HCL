@@ -1,78 +1,83 @@
-source: dasmeta/eks/aws
-version:  2.24.6
+source: "dasmeta/eks/aws"
+version: "2.24.6"
+
 variables:
   account_id: "718484331636"
-  claster_name: "eks-dev"
+  cluster_name: "eks-dev" # Fixed typo: claster -> cluster
   alarms:
-    sns_topic:  "Default"
+    sns_topic: "Default"
   map_users:
-    - rolearn:  "arn:aws:iam::<account_id>:role/login-aws-check-role"
+    - rolearn: "arn:aws:iam::718484331636:role/login-aws-check-role" # Replaced <account_id> placeholder
       username: "AWSReservedSSO_AdministratorAccess_9f6025a800250f00"
       groups:
-        - system:masters
-enable_kube_state_metrics:  true
+        - "system:masters"
+
+enable_kube_state_metrics: true
 prometheus_metrics:
-  - kube_node_status_condition
-claster_enabled_log_types: []
-vps:
+  - "kube_node_status_condition"
+cluster_enabled_log_types: [] # Fixed typo: claster -> cluster
+
+vpc: # Fixed typo: vps -> vpc
   link:
-    id: $(1-environments/test/vpc.id)
-    private_subnet_ids: $(1-environments/test/vpc.private_subnets)
+    id: "$(1-environments/test/vpc.id)"
+    private_subnet_ids: "$(1-environments/test/vpc.private_subnets)"
+
 keda:
-  ebabled:  false
+  enabled: false # Fixed typo: ebabled -> enabled
   attach_policies:
-    sqs:  true
+    sqs: true
+
 s3_csi:
-  enabled:  false
-karpentner:
-  enabled:  true
+  enabled: false
+
+karpenter: # Fixed typo: karpentner -> karpenter
+  enabled: true
   configs:
     replicas: 1
+
 resource_configs_defaults:
   limits:
-    cpu:  100
+    cpu: 100
+
 resource_configs:
   nodePools:
     general:
-      weigth: 1
+      weight: 1 # Fixed typo: weigth -> weight
+
 node_groups:
   dev_nodes_ondemand:
     min_size: 1
     desired_size: 1
-    instance_types: [t2.micro]
-      ami_type: AL2023_x86_64_STANDARD
-      max_size: 1
-      max_capacity: 1
-      capacity_type: "ON_DEMAND"
-      block_device_mappings:
-        xvda:
-          device_name: "/dev/xvda"
-          ebs:
-            volume_size: 100
-            volume_type: "gp3"
+    max_size: 1
+    max_capacity: 1
+    instance_types: ["t2.micro"]
+    ami_type: "AL2023_x86_64_STANDARD"
+    capacity_type: "ON_DEMAND"
+    block_device_mappings:
+      xvda:
+        device_name: "/dev/xvda"
+        ebs:
+          volume_size: 100
+          volume_type: "gp3"
   node_groups_default:
     disk_size: 50
     instance_types: ["t2.micro"]
-    ami_type: AL2023_x86_64_STANDARD
+    ami_type: "AL2023_x86_64_STANDARD"
     capacity_type: "SPOT"
+
 providers:
-  - name: aws
-    version: ~> 5.0
+  - name: "aws"
+    version: "~> 5.0"
     module_nested_provider: true
     variables:
-      region: eu-central-1
-      #access_key: ${0-accounts/root/iam-dev.iam_access_key_id}
-      #secret_key: ${0-accounts/root/iam-dev.iam_access_key_secret}
+      region: "eu-central-1"
       default_tags:
         tags:
-          Account: mher-test
-          ManageLevel: environment
+          Account: "mher-test"
+          ManageLevel: "environment"
+
 output:
   sensitive: true
+
 linked_workspaces:
-  - 1-environments/test/vpc
-  #- 0-accounts/root/iam-dev
-
-
-
-
+  - "1-environments/test/vpc"

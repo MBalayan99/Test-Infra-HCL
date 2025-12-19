@@ -8,6 +8,6 @@ provider "aws" {
 
   default_tags {
 
-    tags = {"AppliedFrom":"terraform-cloud","ManagedBy":"terraform","TerraformCloudWorkspace":"1-environments_test_vpc","TerraformModuleSource":"dasmeta/vpc/aws","TerraformModuleVersion":"2.15.1"}
+    tags = {"AppliedFrom":"terraform-cloud","ManagedBy":"terraform","TerraformCloudWorkspace":"1-environments_test_vpc","TerraformModuleSource":"dasmeta/vpc/aws","TerraformModuleVersion":"1.0.2"}
   }
 }

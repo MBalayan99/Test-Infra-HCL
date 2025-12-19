@@ -4,7 +4,7 @@
 
 
 ```txt
-tf cloud workspace name: 1-environments_test_vpc
-tf module source: dasmeta/vpc/aws
-tf_module version: 1.0.2
+tf cloud workspace name: 1-environments_test_eks
+tf module source: dasmeta/eks/aws
+tf_module version: 2.24.6
 ```
