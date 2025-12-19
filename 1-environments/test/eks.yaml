@@ -19,8 +19,8 @@ variables:
 
   vpc: # Fixed typo: vps -> vpc
     link:
-      id: "$(1-environments/test/vpc.id)"
-      private_subnet_ids: "$(1-environments/test/vpc.private_subnets)"
+      id: ${1-environments/test/vpc.id}
+      private_subnet_ids: ${1-environments/test/vpc.private_subnets}
 
   keda:
     enabled: false # Fixed typo: ebabled -> enabled

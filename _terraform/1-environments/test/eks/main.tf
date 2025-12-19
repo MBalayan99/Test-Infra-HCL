@@ -17,7 +17,7 @@ module "this" {
   resource_configs = {"nodePools":{"general":{"weight":1}}}
   resource_configs_defaults = {"limits":{"cpu":100}}
   s3_csi = {"enabled":false}
-  vpc = {"link":{"id":"$(data.tfe_outputs.this["1-environments/test/vpc"].values.results.id)","private_subnet_ids":"$(data.tfe_outputs.this["1-environments/test/vpc"].values.results.private_subnets)"}}
+  vpc = {"link":{"id":"${data.tfe_outputs.this["1-environments/test/vpc"].values.results.id}","private_subnet_ids":"${data.tfe_outputs.this["1-environments/test/vpc"].values.results.private_subnets}"}}
   providers = {"aws":"aws"}
 }
 
