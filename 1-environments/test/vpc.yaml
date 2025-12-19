@@ -1,8 +1,8 @@
 source: dasmeta/vpc/aws
 version: 1.0.2
 variables:
-  names:  "test-vpc"
-  availabilyty_zones:
+  name:  "test-vpc"
+  availability_zones:
     -"ey-central-1a"
     -"ey-central-1b"
     -"ey-central-1c"
@@ -15,11 +15,11 @@ variables:
     -"10.16.5.0/24"
     -"10.16.6.0/24"
   cidr: "10.16.0.0/24"
-  public_subnets_tags:
+  public_subnet_tags:
     "kubernetes.io/cluster/eks-dev":  shared" #cl name
     "kubernetes.io/role/internal-elb":  "1"
     "kubernetes.sh/discovery":  "eks-dev" #cluster  name
-  private_subnets_tags:
+  private_subnet_tags:
     "kubernetes.io/cluster/eks-dev":  shared"
     "kubernetes.io/role/internal-elb":  "1"
     "kubernetes.sh/discovery":  "eks-dev"
