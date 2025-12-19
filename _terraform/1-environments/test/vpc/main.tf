@@ -4,7 +4,7 @@ module "this" {
   source  = "dasmeta/vpc/aws"
   version = "1.0.2"
 
-  availability_zones = ["ey-central-1a","ey-central-1b","ey-central-1c"]
+  availability_zones = ["eu-central-1a","eu-central-1b","eu-central-1c"]
   cidr = "10.16.0.0/24"
   name = "test-vpc"
   private_subnet_tags = {"kubernetes.io/cluster/eks-dev":"shared\"","kubernetes.io/role/internal-elb":"1","kubernetes.sh/discovery":"eks-dev"}
