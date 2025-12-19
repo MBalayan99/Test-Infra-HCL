@@ -1,8 +1,8 @@
 source: dasmeta/eks/aws
 version:  2.24.6
 variables:
-  account_id: "id"
-  claster_name: "cluster_name"
+  account_id: "718484331636"
+  claster_name: "eks-dev"
   alarms:
     sns_topic:  "Default"
   map_users:
@@ -61,17 +61,17 @@ providers:
     module_nested_provider: true
     variables:
       region: eu-central-1
-      access_key: ${0-accounts/root/iam-dev.iam_access_key_id}
-      secret_key: ${0-accounts/root/iam-dev.iam_access_key_secret}
+      #access_key: ${0-accounts/root/iam-dev.iam_access_key_id}
+      #secret_key: ${0-accounts/root/iam-dev.iam_access_key_secret}
       default_tags:
         tags:
-          Account: buycycle
+          Account: mher-test
           ManageLevel: environment
 output:
   sensitive: true
 linked_workspaces:
-  - 1-environments/dev-2/vpc
-  - 0-accounts/root/iam-dev
+  - 1-environments/test/vpc
+  #- 0-accounts/root/iam-dev
 
 
 
