@@ -12,58 +12,58 @@ variables:
       groups:
         - "system:masters"
 
-enable_kube_state_metrics: true
-prometheus_metrics:
-  - "kube_node_status_condition"
-cluster_enabled_log_types: [] # Fixed typo: claster -> cluster
+  enable_kube_state_metrics: true
+  prometheus_metrics:
+    - "kube_node_status_condition"
+  cluster_enabled_log_types: [] # Fixed typo: claster -> cluster
 
-vpc: # Fixed typo: vps -> vpc
-  link:
-    id: "$(1-environments/test/vpc.id)"
-    private_subnet_ids: "$(1-environments/test/vpc.private_subnets)"
+  vpc: # Fixed typo: vps -> vpc
+    link:
+      id: "$(1-environments/test/vpc.id)"
+      private_subnet_ids: "$(1-environments/test/vpc.private_subnets)"
 
-keda:
-  enabled: false # Fixed typo: ebabled -> enabled
-  attach_policies:
-    sqs: true
+  keda:
+    enabled: false # Fixed typo: ebabled -> enabled
+    attach_policies:
+      sqs: true
 
-s3_csi:
-  enabled: false
+  s3_csi:
+    enabled: false
 
-karpenter: # Fixed typo: karpentner -> karpenter
-  enabled: true
-  configs:
-    replicas: 1
+  karpenter: # Fixed typo: karpentner -> karpenter
+    enabled: true
+    configs:
+      replicas: 1
 
-resource_configs_defaults:
-  limits:
-    cpu: 100
+  resource_configs_defaults:
+    limits:
+      cpu: 100
 
-resource_configs:
-  nodePools:
-    general:
-      weight: 1 # Fixed typo: weigth -> weight
+  resource_configs:
+    nodePools:
+      general:
+        weight: 1 # Fixed typo: weigth -> weight
 
-node_groups:
-  dev_nodes_ondemand:
-    min_size: 1
-    desired_size: 1
-    max_size: 1
-    max_capacity: 1
-    instance_types: ["t2.micro"]
-    ami_type: "AL2023_x86_64_STANDARD"
-    capacity_type: "ON_DEMAND"
-    block_device_mappings:
-      xvda:
-        device_name: "/dev/xvda"
-        ebs:
-          volume_size: 100
-          volume_type: "gp3"
-  node_groups_default:
-    disk_size: 50
-    instance_types: ["t2.micro"]
-    ami_type: "AL2023_x86_64_STANDARD"
-    capacity_type: "SPOT"
+  node_groups:
+    dev_nodes_ondemand:
+      min_size: 1
+      desired_size: 1
+      max_size: 1
+      max_capacity: 1
+      instance_types: ["t2.micro"]
+      ami_type: "AL2023_x86_64_STANDARD"
+      capacity_type: "ON_DEMAND"
+      block_device_mappings:
+        xvda:
+          device_name: "/dev/xvda"
+          ebs:
+            volume_size: 100
+            volume_type: "gp3"
+    node_groups_default:
+      disk_size: 50
+      instance_types: ["t2.micro"]
+      ami_type: "AL2023_x86_64_STANDARD"
+      capacity_type: "SPOT"
 
 providers:
   - name: "aws"
