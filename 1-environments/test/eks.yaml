@@ -6,7 +6,7 @@ variables:
   cluster_name: "eks-dev" # Fixed typo: claster -> cluster
   alarms:
     sns_topic: "Default"
-  map_users:
+  map_roles:
     - rolearn: "arn:aws:iam::718484331636:role/login-aws-check-role" # Replaced <account_id> placeholder
       username: "AWSReservedSSO_AdministratorAccess_9f6025a800250f00"
       groups:
@@ -34,15 +34,16 @@ variables:
     enabled: true
     configs:
       replicas: 1
+    resource_configs:
+      nodePools:
+        general:
+          weight: 1
 
-  resource_configs_defaults:
-    limits:
-      cpu: 100
+    resource_configs_defaults:
+      limits:
+        cpu: 100
 
-  resource_configs:
-    nodePools:
-      general:
-        weight: 1 # Fixed typo: weigth -> weight
+
 
   node_groups:
     dev_nodes_ondemand:
