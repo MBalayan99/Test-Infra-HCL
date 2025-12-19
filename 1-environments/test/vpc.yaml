@@ -3,9 +3,9 @@ version: 1.0.2
 variables:
   name:  "test-vpc"
   availability_zones:
-    - "ey-central-1a"
-    - "ey-central-1b"
-    - "ey-central-1c"
+    - "eu-central-1a"
+    - "eu-central-1b"
+    - "eu-central-1c"
   private_subnets:
     - "10.16.1.0/24"
     - "10.16.2.0/24"
