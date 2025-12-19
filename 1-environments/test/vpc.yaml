@@ -14,7 +14,7 @@ variables:
     - "10.16.4.0/24"
     - "10.16.5.0/24"
     - "10.16.6.0/24"
-  cidr: "10.16.0.0/24"
+  cidr: "10.16.0.0/16"
   public_subnet_tags:
     "kubernetes.io/cluster/eks-dev":  shared" #cl name
     "kubernetes.io/role/internal-elb":  "1"
