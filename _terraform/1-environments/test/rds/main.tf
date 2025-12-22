@@ -19,9 +19,9 @@ module "this" {
   publicly_accessible = false
   storage_encrypted = true
   storage_type = "gp2"
-  subnet_ids = "${linked_workspaces.vpc.outputs.private_subnets}"
+  subnet_ids = "${data.tfe_outputs.vpc.outputs.private_subnets}"
   tags = {"Environment":"test","Owner":"mher-test","Project":"Test-Infra-HCL"}
-  vpc_security_group_ids = ["${linked_workspaces.rds-sg.outputs.rds_security_group_id}"]
+  vpc_security_group_ids = ["${data.tfe_outputs.rds_sg.outputs.rds_security_group_id}"]
   providers = {"aws":"aws"}
 }
 

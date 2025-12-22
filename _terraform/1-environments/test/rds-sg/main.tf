@@ -9,7 +9,7 @@ module "this" {
   ingress_with_cidr_blocks = [{"cidr_blocks":["10.16.0.0/16"],"from_port":3306,"protocol":"tcp","to_port":3306}]
   name = "rds-mysql-sg"
   tags = {"Environment":"test","Name":"rds-mysql-sg"}
-  vpc_id = "${linked_workspaces.vpc.outputs.vpc_id}"
+  vpc_id = "${data.tfe_outputs.vpc.outputs.vpc_id}"
   providers = {"aws":"aws"}
 }
 

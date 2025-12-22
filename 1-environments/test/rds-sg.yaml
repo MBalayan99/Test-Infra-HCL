@@ -4,8 +4,7 @@ version: "1.0.0"
 variables:
   name: rds-mysql-sg
   description: Security group for RDS MySQL
-
-  vpc_id: ${linked_workspaces.vpc.outputs.vpc_id}
+  vpc_id: ${data.tfe_outputs.vpc.outputs.vpc_id}
 
   ingress_with_cidr_blocks:
     - from_port: 3306

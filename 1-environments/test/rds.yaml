@@ -17,10 +17,9 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
+  subnet_ids: ${data.tfe_outputs.vpc.outputs.private_subnets}
   vpc_security_group_ids:
-    - ${linked_workspaces.rds-sg.outputs.rds_security_group_id}
-
-  subnet_ids: ${linked_workspaces.vpc.outputs.private_subnets}
+    - ${data.tfe_outputs.rds_sg.outputs.rds_security_group_id}
 
   tags:
     Environment: test
