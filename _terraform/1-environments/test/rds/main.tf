@@ -4,7 +4,7 @@ module "this" {
   source  = "dasmeta/rds/aws"
   version = "1.4.0"
 
-  alarms = {"comparison_operator":"GreaterThanThreshold","enabled":true,"evaluation_periods":1,"name":"cpu_utilization_high","period":300,"statistic":"Average","threshold":80}
+  alarms = [{"comparison_operator":"GreaterThanThreshold","enabled":true,"evaluation_periods":1,"name":"cpu_utilization_high","period":300,"statistic":"Average","threshold":80}]
   allocated_storage = 20
   backup_retention_period = 7
   db_name = "testdb"
