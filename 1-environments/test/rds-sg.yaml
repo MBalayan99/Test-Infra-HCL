@@ -1,0 +1,41 @@
+source: dasmeta/security-group/aws
+version: 1.0.0
+
+variables:
+  name: rds-mysql-sg
+  description: Security group for RDS MySQL
+  vpc_id: "${linked_workspaces.vpc.outputs.id}"
+
+  ingress_with_cidr_blocks:
+    - from_port: 3306
+      to_port: 3306
+      protocol: tcp
+      cidr_blocks:
+        - 10.16.0.0/16
+
+  egress_with_cidr_blocks:
+    - from_port: 0
+      to_port: 0
+      protocol: "-1"
+      cidr_blocks:
+        - 0.0.0.0/0
+
+  tags:
+    Name: rds-mysql-sg
+    Environment: test
+
+linked_workspaces:
+  - name: vpc
+    path: 1-environments/test/vpc
+
+providers:
+  - name: aws
+    version: "~> 4.0"
+    module_nested_provider: true
+    variables:
+      region: eu-central-1
+
+outputs:
+  rds_security_group_id:
+    value: ${aws_security_group.this.id}
+    description: The ID of the RDS security group
