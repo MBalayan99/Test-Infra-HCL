@@ -4,7 +4,6 @@ module "this" {
   source  = "dasmeta/rds/aws"
   version = "1.4.0"
 
-  alarms = [{"comparison_operator":"GreaterThanThreshold","enabled":true,"evaluation_periods":1,"name":"cpu_utilization_high","period":300,"statistic":"Average","threshold":80}]
   allocated_storage = 20
   backup_retention_period = 7
   db_name = "testdb"
@@ -19,9 +18,9 @@ module "this" {
   publicly_accessible = false
   storage_encrypted = true
   storage_type = "gp2"
-  subnet_ids = "${data.tfe_outputs.vpc.outputs.private_subnets}"
+  subnet_ids = ["data.tfe_outputs.this["1-environments/test/vpc"].values.results"]
   tags = {"Environment":"test","Owner":"mher-test","Project":"Test-Infra-HCL"}
-  vpc_security_group_ids = ["${data.tfe_outputs.rds_sg.outputs.rds_security_group_id}"]
+  vpc_security_group_ids = ["data.tfe_outputs.this["1-environments/test/rds-sg"].values.results"]
   providers = {"aws":"aws"}
 }
 

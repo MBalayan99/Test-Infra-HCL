@@ -2,46 +2,52 @@ source: dasmeta/rds/aws
 version: 1.4.0
 
 variables:
-  identifier: rds-instance
-  engine: mysql
+  identifier: "rds-instance"
+  engine: "mysql"
   engine_version: "8.0"
-  instance_class: db.t2.micro
+  instance_class: "db.t2.micro"
   allocated_storage: 20
-  storage_type: gp2
+  storage_type: "gp2"
   storage_encrypted: true
   multi_az: false
-  db_name: testdb
-  db_username: admin
-  db_password: Test1234!
+  db_name: "testdb"
+  db_username: "admin"
+  db_password: "Test1234!"
   port: 3306
   publicly_accessible: false
   backup_retention_period: 7
 
-  # get security group ID from linked workspace
   vpc_security_group_ids:
-    - ${linked_workspaces.rds_sg.outputs.rds_security_group_id}
+    - "1-environments/test/rds-sg"  # linked workspace имя
 
-  # get private subnet IDs from linked workspace
-  subnet_ids: ${linked_workspaces.vpc.outputs.private_subnets}
+  subnet_ids:
+    - "1-environments/test/vpc"     # linked workspace имя
 
   tags:
-    Environment: test
-    Project: Test-Infra-HCL
-    Owner: mher-test
+    Environment: "test"
+    Project: "Test-Infra-HCL"
+    Owner: "mher-test"
 
 linked_workspaces:
-  - name: vpc
-    path: 1-environments/test/vpc
-  - name: rds_sg
-    path: 1-environments/test/rds-sg
+  - "1-environments/test/vpc"
+  - "1-environments/test/rds-sg"
 
 providers:
   - name: aws
     version: "~> 5.0"
     module_nested_provider: true
     variables:
-      region: eu-central-1
+      region: "eu-central-1"
       default_tags:
         tags:
-          Account: mher-test
-          ManageLevel: environment
+          Account: "mher-test"
+          ManageLevel: "environment"
+
+alarms:
+  name: "cpu_utilization_high"
+  enabled: true
+  comparison_operator: "GreaterThanThreshold"
+  evaluation_periods: 1
+  threshold: 80
+  statistic: "Average"
+  period: 300
