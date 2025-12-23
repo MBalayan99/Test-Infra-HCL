@@ -1,7 +1,7 @@
 ## This file and its content are generated based on config, pleas check README.md for more details
 
 module "this" {
-  source  = "dasmeta/security-group/aws"
+  source  = "git::https://github.com/dasmeta/terraform-aws-security-group.git//aws"
   version = "1.0.0"
 
   description = "Security group for RDS MySQL"

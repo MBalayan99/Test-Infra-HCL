@@ -5,6 +5,6 @@
 
 ```txt
 tf cloud workspace name: 1-environments_test_rds-sg
-tf module source: dasmeta/security-group/aws
+tf module source: git::https://github.com/dasmeta/terraform-aws-security-group.git//aws
 tf_module version: 1.0.0
 ```

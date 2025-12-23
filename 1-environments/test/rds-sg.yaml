@@ -1,5 +1,6 @@
 # RDS Security Group Module
-source: dasmeta/security-group/aws
+source: "git::https://github.com/dasmeta/terraform-aws-security-group.git//aws"
+
 version: 1.0.0
 
 variables:

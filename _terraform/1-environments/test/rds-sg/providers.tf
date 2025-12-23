@@ -8,6 +8,6 @@ provider "aws" {
 
   default_tags {
 
-    tags = {"AppliedFrom":"terraform-cloud","ManagedBy":"terraform","TerraformCloudWorkspace":"1-environments_test_rds-sg","TerraformModuleSource":"dasmeta/security-group/aws","TerraformModuleVersion":"1.0.0"}
+    tags = {"AppliedFrom":"terraform-cloud","ManagedBy":"terraform","TerraformCloudWorkspace":"1-environments_test_rds-sg","TerraformModuleSource":"git::https://github.com/dasmeta/terraform-aws-security-group.git//aws","TerraformModuleVersion":"1.0.0"}
   }
 }
