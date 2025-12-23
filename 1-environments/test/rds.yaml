@@ -20,11 +20,11 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
-  # 🔗 Security Group
+  # Security group ID from rds-sg workspace
   vpc_security_group_ids:
     - ${1-environments/test/rds-sg.security_group_id}
 
-  # 🔗 PRIVATE subnets  VPC
+  # Private subnets from VPC workspace
   subnet_ids: ${1-environments/test/vpc.private_subnets}
 
   tags:
@@ -32,7 +32,6 @@ variables:
     Project: "Test-Infra-HCL"
     Owner: "mher"
 
-  #  alarms
   alarms:
     name: "cpu_utilization_high"
     enabled: true
