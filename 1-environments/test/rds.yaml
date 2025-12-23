@@ -45,10 +45,10 @@ providers:
           ManageLevel: "environment"
 
 alarms:
-  name: "cpu_utilization_high"
-  enabled: true
-  comparison_operator: "GreaterThanThreshold"
-  evaluation_periods: 1
-  threshold: 80
-  statistic: "Average"
-  period: 300
+    name: "cpu_utilization_high"
+    enabled: true
+    comparison_operator: "GreaterThanThreshold"
+    evaluation_periods: 1
+    threshold: 80
+    statistic: "Average"
+    period: 300
