@@ -5,8 +5,8 @@ module "this" {
   version = "1.0.0"
 
   description = "Security group for RDS MySQL"
-  egress_with_cidr_blocks = [{"cidr_blocks":["0.0.0.0/0"],"description":"Allow all outbound","from_port":0,"protocol":"-1","to_port":0}]
-  ingress_with_cidr_blocks = [{"cidr_blocks":["10.16.0.0/16"],"description":"Allow MySQL inside VPC","from_port":3306,"protocol":"tcp","to_port":3306}]
+  egress_with_cidr_blocks = [{"cidr_blocks":["0.0.0.0/0"],"description":"Allow all outbound traffic","from_port":0,"protocol":"-1","to_port":0}]
+  ingress_with_cidr_blocks = [{"cidr_blocks":["10.16.0.0/16"],"description":"Allow MySQL traffic inside VPC","from_port":3306,"protocol":"tcp","to_port":3306}]
   name = "rds-mysql-sg"
   tags = {"Environment":"test","Name":"rds-mysql-sg"}
   vpc_id = "${data.tfe_outputs.this["1-environments/test/vpc"].values.results.vpc_id}"
