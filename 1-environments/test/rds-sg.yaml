@@ -4,7 +4,9 @@ version: 1.0.0
 variables:
   name: "rds-mysql-sg"
   description: "Security group for RDS MySQL"
-  vpc_id: "1-environments/test/vpc"  # linked workspace имя, не output
+
+  # get VPC ID из workspace vpc
+  vpc_id: ${1-environments/test/vpc.vpc_id}
 
   ingress_with_cidr_blocks:
     - description: "Allow MySQL inside VPC"
@@ -25,7 +27,6 @@ variables:
   tags:
     Name: "rds-mysql-sg"
     Environment: "test"
-    ManagedBy: "terramate"
 
 linked_workspaces:
   - "1-environments/test/vpc"
@@ -36,8 +37,3 @@ providers:
     module_nested_provider: true
     variables:
       region: "eu-central-1"
-
-outputs:
-  rds_security_group_id:
-    value: ${aws_security_group.this.id}
-    description: "RDS MySQL security group ID"

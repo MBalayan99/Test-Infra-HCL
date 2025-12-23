@@ -12,16 +12,16 @@ module "this" {
   db_username = "admin"
   engine = "mysql"
   engine_version = "8.0"
-  identifier = "rds-instance"
-  instance_class = "db.t2.micro"
+  identifier = "test-mysql"
+  instance_class = "db.t3.micro"
   multi_az = false
   port = 3306
   publicly_accessible = false
   storage_encrypted = true
   storage_type = "gp2"
-  subnet_ids = ["${data.tfe_outputs.this["1-environments/test/vpc"].values.results.private_subnets}"]
-  tags = {"Environment":"test","Owner":"mher-test","Project":"Test-Infra-HCL"}
-  vpc_security_group_ids = ["${data.tfe_outputs.this["1-environments/test/rds-sg"].values.results.rds_security_group_id}"]
+  subnet_ids = "${data.tfe_outputs.this["1-environments/test/vpc"].values.results.private_subnets}"
+  tags = {"Environment":"test","Owner":"mher","Project":"Test-Infra-HCL"}
+  vpc_security_group_ids = ["${data.tfe_outputs.this["1-environments/test/rds-sg"].values.results.security_group_id}"]
   providers = {"aws":"aws"}
 }
 

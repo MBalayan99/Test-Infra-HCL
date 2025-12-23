@@ -2,33 +2,37 @@ source: dasmeta/rds/aws
 version: 1.4.0
 
 variables:
-  identifier: "rds-instance"
+  identifier: "test-mysql"
   engine: "mysql"
   engine_version: "8.0"
-  instance_class: "db.t2.micro"
+
+  instance_class: "db.t3.micro"
   allocated_storage: 20
   storage_type: "gp2"
   storage_encrypted: true
   multi_az: false
+
   db_name: "testdb"
   db_username: "admin"
   db_password: "Test1234!"
   port: 3306
+
   publicly_accessible: false
   backup_retention_period: 7
 
+  # 🔗 Security Group
   vpc_security_group_ids:
-    - ${1-environments/test/rds-sg.rds_security_group_id}
+    - ${1-environments/test/rds-sg.security_group_id}
 
-  subnet_ids:
-    - ${1-environments/test/vpc.private_subnets}
+  # 🔗 PRIVATE subnets  VPC
+  subnet_ids: ${1-environments/test/vpc.private_subnets}
 
   tags:
     Environment: "test"
     Project: "Test-Infra-HCL"
-    Owner: "mher-test"
+    Owner: "mher"
 
-  # ✅ Оборачиваем alarms в variables
+  #  alarms
   alarms:
     name: "cpu_utilization_high"
     enabled: true
@@ -37,7 +41,7 @@ variables:
     threshold: 80
     statistic: "Average"
     period: 300
-    sns_topic:  "Default"
+    sns_topic: "Default"
 
 linked_workspaces:
   - "1-environments/test/vpc"
@@ -49,7 +53,3 @@ providers:
     module_nested_provider: true
     variables:
       region: "eu-central-1"
-      default_tags:
-        tags:
-          Account: "mher-test"
-          ManageLevel: "environment"
