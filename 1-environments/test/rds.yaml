@@ -1,5 +1,5 @@
-source: "dasmeta/rds/aws"
-version: "1.4.0"
+source: dasmeta/rds/aws
+version: 1.4.0
 
 variables:
   identifier: rds-instance
@@ -17,23 +17,23 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
-  subnet_ids: ${data.tfe_outputs.vpc.outputs.private_subnets}
+  # get security group ID from linked workspace
   vpc_security_group_ids:
-    - ${data.tfe_outputs.rds_sg.outputs.rds_security_group_id}
+    - ${linked_workspaces.rds_sg.outputs.rds_security_group_id}
+
+  # get private subnet IDs from linked workspace
+  subnet_ids: ${linked_workspaces.vpc.outputs.private_subnets}
 
   tags:
     Environment: test
     Project: Test-Infra-HCL
     Owner: mher-test
 
-  alarms:
-    - name: cpu_utilization_high
-      enabled: true
-      comparison_operator: GreaterThanThreshold
-      evaluation_periods: 1
-      threshold: 80
-      statistic: Average
-      period: 300
+linked_workspaces:
+  - name: vpc
+    path: 1-environments/test/vpc
+  - name: rds_sg
+    path: 1-environments/test/rds-sg
 
 providers:
   - name: aws
@@ -45,7 +45,3 @@ providers:
         tags:
           Account: mher-test
           ManageLevel: environment
-
-linked_workspaces:
-  - "1-environments/test/vpc"
-  - "1-environments/test/rds-sg"
