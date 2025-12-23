@@ -21,7 +21,7 @@ variables:
   backup_retention_period: 7
 
   # Use VPC private subnets (must be subnet IDs, not CIDR blocks)
-  subnet_ids: ${linked_workspaces.vpc.outputs.private_subnets}
+  subnet_ids: ${1-environments/test/vpc.private_subnets}
 
   # Create a dedicated security group for this RDS instance
   create_security_group: true
@@ -29,11 +29,11 @@ variables:
   security_group_description: "Security group for RDS instance"
 
   # Ingress rule for the security group (single object, cidr_blocks as string)
-  ingress_with_cidr_blocks:
-    from_port: 3306
-    to_port: 3306
-    protocol: tcp
-    cidr_blocks: "10.16.0.0/16"
+  #ingress_with_cidr_blocks:
+   # from_port: 3306
+    #to_port: 3306
+    #protocol: tcp
+    #cidr_blocks: "10.16.0.0/16"
 
   # CloudWatch alarm (single object, not a list)
   alarms:
