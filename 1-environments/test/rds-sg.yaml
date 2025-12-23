@@ -1,20 +1,24 @@
-source: "dasmeta/security-group/aws"
-version: "1.0.0"
+source: dasmeta/security-group/aws
+version: 1.0.0
 
 variables:
   name: rds-mysql-sg
   description: Security group for RDS MySQL
-  vpc_id: ${data.tfe_outputs.vpc.outputs.vpc_id}
+
+  # VPC ID from linked workspace
+  vpc_id: ${linked_workspaces.vpc.outputs.vpc_id}
 
   ingress_with_cidr_blocks:
-    - from_port: 3306
+    - description: Allow MySQL inside VPC
+      from_port: 3306
       to_port: 3306
       protocol: tcp
       cidr_blocks:
-        - 10.16.0.0/16
+        - 10.16.0.0/16   # CIDR   of the VPC from linked workspace
 
   egress_with_cidr_blocks:
-    - from_port: 0
+    - description: Allow all outbound
+      from_port: 0
       to_port: 0
       protocol: "-1"
       cidr_blocks:
@@ -23,6 +27,11 @@ variables:
   tags:
     Name: rds-mysql-sg
     Environment: test
+    ManagedBy: terramate
+
+linked_workspaces:
+  - name: vpc
+    path: 1-environments/test/vpc
 
 providers:
   - name: aws
@@ -34,7 +43,4 @@ providers:
 outputs:
   rds_security_group_id:
     value: ${aws_security_group.this.id}
-    description: The ID of the RDS security group
-
-linked_workspaces:
-  - "1-environments/test/vpc"
+    description: RDS MySQL security group ID
