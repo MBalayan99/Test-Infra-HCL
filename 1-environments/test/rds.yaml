@@ -37,6 +37,7 @@ variables:
     threshold: 80
     statistic: "Average"
     period: 300
+    sns_topic:  "Default"
 
 linked_workspaces:
   - "1-environments/test/vpc"
