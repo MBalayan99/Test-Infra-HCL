@@ -17,11 +17,12 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
+  # ✅ Используем outputs linked workspace
   vpc_security_group_ids:
-    - "1-environments/test/rds-sg"  # linked workspace имя
+    - ${1-environments/test/rds-sg.rds_security_group_id}
 
   subnet_ids:
-    - "1-environments/test/vpc"     # linked workspace имя
+    - ${1-environments/test/vpc.private_subnets}
 
   tags:
     Environment: "test"
