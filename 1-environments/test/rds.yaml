@@ -1,57 +1,3 @@
-#source: dasmeta/rds/aws
-#version: 1.4.0
-
-#variables:
- # identifier: "test-mysql"
-  #engine: "mysql"
-  #engine_version: "8.0"
-
-  #instance_class: "db.t3.micro"
-  #allocated_storage: 20
-  #storage_type: "gp2"
-  #storage_encrypted: true
-  #multi_az: false
-
-  #db_name: "testdb"
-  #db_username: "admin"
-  #db_password: "Test1234!"
-  #port: 3306
-
-  #publicly_accessible: false
-  #backup_retention_period: 7
-
-  # Security group ID from rds-sg workspace
-  #vpc_security_group_ids:
-   # - ${1-environments/test/rds-sg.security_group_id}
-
-  # Private subnets from VPC workspace
-  #subnet_ids: ${1-environments/test/vpc.private_subnets}
-
-  #tags:
-   # Environment: "test"
-    #Project: "Test-Infra-HCL"
-    #Owner: "mher"
-
- # alarms:
-  #  name: "cpu_utilization_high"
-   # enabled: true
-    #comparison_operator: "GreaterThanThreshold"
-    #evaluation_periods: 1
-    #threshold: 80
-    #statistic: "Average"
-    #period: 300
-    #sns_topic: "Default"
-
-#linked_workspaces:
- # - "1-environments/test/vpc"
-  #- "1-environments/test/rds-sg"
-
-#providers:
- # - name: aws
-  #  version: "~> 5.0"
-   # module_nested_provider: true
-    #variables:
-     # region: "eu-central-1"
 source: dasmeta/rds/aws
 version: 1.4.0
 
@@ -71,10 +17,10 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
-  # приватные подсети из VPC
-  subnet_ids: ${linked_workspaces.vpc.outputs.private_subnets}
+  # Private subnets from VPC workspace
+  subnet_ids: ${1-environments/test/vpc.private_subnets}
 
-  # создаем SG автоматически
+  # Security group for this RDS
   create_security_group: true
   security_group_name: "rds-instance-sg"
   security_group_description: "Security group for RDS instance"
@@ -83,15 +29,15 @@ variables:
       to_port: 3306
       protocol: tcp
       cidr_blocks:
-        - "10.16.0.0/16"  # диапазон сети VPC, разрешаем доступ
+        - "10.16.0.0/16"
 
-  # Теги
+  # Tags
   tags:
     Environment: test
     Project: Test-Infra-HCL
     Owner: mher-test
 
-  # 🔔 Alarms (CloudWatch)
+  # Alarms
   alarms:
     - name: "cpu_utilization_high"
       enabled: true
@@ -103,8 +49,8 @@ variables:
       sns_topic: "Default"
 
 linked_workspaces:
-  - name: vpc
-    path: 1-environments/test/vpc
+  - "1-environments/test/vpc"
+  #- "1-environments/test/rds-sg"
 
 providers:
   - name: aws
@@ -116,4 +62,3 @@ providers:
         tags:
           Account: mher-test
           ManageLevel: environment
-

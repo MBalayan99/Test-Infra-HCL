@@ -8,6 +8,6 @@ provider "aws" {
 
   default_tags {
 
-    tags = {"AppliedFrom":"terraform-cloud","ManagedBy":"terraform","TerraformCloudWorkspace":"1-environments_test_rds","TerraformModuleSource":"dasmeta/rds/aws","TerraformModuleVersion":"1.4.0"}
+    tags = {"Account":"mher-test","AppliedFrom":"terraform-cloud","ManageLevel":"environment","ManagedBy":"terraform","TerraformCloudWorkspace":"1-environments_test_rds","TerraformModuleSource":"dasmeta/rds/aws","TerraformModuleVersion":"1.4.0"}
   }
 }
