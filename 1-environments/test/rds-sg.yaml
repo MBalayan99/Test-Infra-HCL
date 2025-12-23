@@ -5,11 +5,11 @@ variables:
   name: "rds-mysql-sg"
   description: "Security group for RDS MySQL"
 
-  # get VPC ID из workspace vpc
+  # VPC ID is taken from the vpc workspace
   vpc_id: ${1-environments/test/vpc.vpc_id}
 
   ingress_with_cidr_blocks:
-    - description: "Allow MySQL inside VPC"
+    - description: "Allow MySQL traffic inside VPC"
       from_port: 3306
       to_port: 3306
       protocol: tcp
@@ -17,7 +17,7 @@ variables:
         - "10.16.0.0/16"
 
   egress_with_cidr_blocks:
-    - description: "Allow all outbound"
+    - description: "Allow all outbound traffic"
       from_port: 0
       to_port: 0
       protocol: "-1"
@@ -37,3 +37,9 @@ providers:
     module_nested_provider: true
     variables:
       region: "eu-central-1"
+
+# REQUIRED output so other workspaces can reference this security group
+outputs:
+  security_group_id:
+    value: ${aws_security_group.this.id}
+    description: "RDS MySQL security group ID"
