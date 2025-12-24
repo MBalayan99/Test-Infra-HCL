@@ -70,3 +70,5 @@ providers:
         tags:
           Account: "mher-test"
           ManageLevel: "environment"
+output:
+  sensitive: true
