@@ -25,6 +25,7 @@ module "this" {
   storage_type = "gp2"
   subnet_ids = "${data.tfe_outputs.this["1-environments/test/vpc"].values.results.private_subnets}"
   tags = {"Environment":"test","Owner":"mher-test","Project":"Test-Infra-HCL"}
+  vpc_id = "${data.tfe_outputs.this["1-environments/test/vpc"].values.results.id}"
   providers = {"aws":"aws"}
 }
 

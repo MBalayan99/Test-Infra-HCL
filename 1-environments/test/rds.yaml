@@ -23,6 +23,7 @@ variables:
 
   # Use VPC private subnets (IDs from linked workspace)
   subnet_ids: ${1-environments/test/vpc.private_subnets}
+  vpc_id: ${1-environments/test/vpc.id}
 
   # Security group creation
   create_security_group: true
