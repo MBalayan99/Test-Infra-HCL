@@ -6,7 +6,7 @@ variables:
   identifier: "rds-instance"
   engine: "mysql"
   engine_version: "8.0"
-  instance_class: "db.t2.micro"
+  instance_class: "db.t3.micro"
   allocated_storage: 20
   storage_type: "gp2"
   storage_encrypted: true
@@ -20,43 +20,42 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
-  # Use VPC private subnets (must be subnet IDs, not CIDR blocks)
+  # Use VPC private subnets (subnet IDs from workspace)
   subnet_ids: ${1-environments/test/vpc.private_subnets}
 
-  # Create a dedicated security group for this RDS instance
+  # Security group settings
   create_security_group: true
   security_group_name: "rds-instance-sg"
   security_group_description: "Security group for RDS instance"
 
-  # Ingress rule for the security group (single object, cidr_blocks as string)
-  #ingress_with_cidr_blocks:
-   # from_port: 3306
-    #to_port: 3306
-    #protocol: tcp
-    #cidr_blocks: "10.16.0.0/16"
+  # Ingress rules (VPC CIDR)
+  ingress_with_cidr_blocks:
+    - from_port: 3306
+      to_port: 3306
+      protocol: "tcp"
+      cidr_blocks: "10.16.0.0/16"
 
-  # CloudWatch alarm (single object, not a list)
+  # CloudWatch alarm (object)
   alarms:
-    name: "cpu_utilization_high"
     enabled: true
-    comparison_operator: "GreaterThanThreshold"
-    evaluation_periods: 1
-    threshold: 80
-    statistic: "Average"
-    period: 300
     sns_topic: "Default"
+    custom_values:
+      name: "cpu_utilization_high"
+      comparison_operator: "GreaterThanThreshold"
+      evaluation_periods: 1
+      threshold: 80
+      statistic: "Average"
+      period: 300
 
-  # Tags for RDS instance
+  # Tags
   tags:
     Environment: "test"
     Project: "Test-Infra-HCL"
     Owner: "mher-test"
 
-# Linked workspace to get outputs from the VPC module
 linked_workspaces:
   - "1-environments/test/vpc"
 
-# AWS provider settings
 providers:
   - name: aws
     version: "~> 5.0"

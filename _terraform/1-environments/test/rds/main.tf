@@ -4,7 +4,7 @@ module "this" {
   source  = "dasmeta/rds/aws"
   version = "1.4.0"
 
-  alarms = {"comparison_operator":"GreaterThanThreshold","enabled":true,"evaluation_periods":1,"name":"cpu_utilization_high","period":300,"sns_topic":"Default","statistic":"Average","threshold":80}
+  alarms = {"custom_values":{"comparison_operator":"GreaterThanThreshold","evaluation_periods":1,"name":"cpu_utilization_high","period":300,"statistic":"Average","threshold":80},"enabled":true,"sns_topic":"Default"}
   allocated_storage = 20
   backup_retention_period = 7
   create_security_group = true
@@ -14,7 +14,8 @@ module "this" {
   engine = "mysql"
   engine_version = "8.0"
   identifier = "rds-instance"
-  instance_class = "db.t2.micro"
+  ingress_with_cidr_blocks = [{"cidr_blocks":"10.16.0.0/16","from_port":3306,"protocol":"tcp","to_port":3306}]
+  instance_class = "db.t3.micro"
   multi_az = false
   port = 3306
   publicly_accessible = false
