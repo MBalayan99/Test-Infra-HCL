@@ -43,7 +43,7 @@ providers:
     variables:
       region: "eu-central-1"
 
-# Output so other modules can reference this security group
+# Output  reference this security group
 outputs:
   security_group_id:
     value: ${aws_security_group.this.id}
