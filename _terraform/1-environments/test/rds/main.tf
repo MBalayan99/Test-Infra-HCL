@@ -14,7 +14,7 @@ module "this" {
   engine = "mysql"
   engine_version = "8.0"
   identifier = "rds-instance"
-  ingress_with_cidr_blocks = [{"cidr_blocks":["10.16.0.0/16"],"from_port":3306,"protocol":"tcp","to_port":3306}]
+  ingress_with_cidr_blocks = [{"cidr_blocks":"10.16.0.0/16","from_port":3306,"protocol":"tcp","to_port":3306}]
   instance_class = "db.t3.micro"
   multi_az = false
   port = 3306
@@ -25,7 +25,6 @@ module "this" {
   storage_type = "gp2"
   subnet_ids = "${data.tfe_outputs.this["1-environments/test/vpc"].values.results.private_subnets}"
   tags = {"Environment":"test","Owner":"mher-test","Project":"Test-Infra-HCL"}
-  vpc_id = "${data.tfe_outputs.this["1-environments/test/vpc"].values.results.id}"
   providers = {"aws":"aws"}
 }
 

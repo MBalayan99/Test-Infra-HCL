@@ -1,45 +1,42 @@
+# Source and version of the RDS module
 source: dasmeta/rds/aws
 version: 1.4.0
 
 variables:
   # RDS instance settings
-  identifier: "rds-instance"
-  engine: "mysql"
-  engine_version: "8.0"
-  instance_class: "db.t3.micro"
-  allocated_storage: 20
-  storage_type: "gp2"
-  storage_encrypted: true
-  multi_az: false
+  identifier: "rds-instance"          # Name of the RDS instance
+  engine: "mysql"                     # Database engine
+  engine_version: "8.0"               # Version of the engine
+  instance_class: "db.t3.micro"       # Instance type
+  allocated_storage: 20               # Storage size in GB
+  storage_type: "gp2"                 # Storage type (general purpose SSD)
+  storage_encrypted: true             # Enable encryption at rest
+  multi_az: false                     
 
-  db_name: "testdb"
-  db_username: "admin"
-  db_password: "Test1234!"
-  port: 3306
+  db_name: "testdb"                   # Initial database name
+  db_username: "admin"                # Master username
+  db_password: "Test1234!"            # Master password
+  port: 3306                          # Port
 
-  publicly_accessible: false
-  backup_retention_period: 7
+  publicly_accessible: false           # Do not expose DB publicly
+  backup_retention_period: 7           # Backup retention in days
 
-  # Use private subnets from the linked VPC workspace
+  # Use VPC private subnets (IDs from linked workspace)
   subnet_ids: ${1-environments/test/vpc.private_subnets}
 
-  # Specify VPC ID explicitly to avoid multiple VPC match error
-  vpc_id: ${1-environments/test/vpc.id}
-
-  # Security group settings (create a new one for this RDS)
+  # Security group creation
   create_security_group: true
   security_group_name: "rds-instance-sg"
   security_group_description: "Security group for RDS instance"
 
-  # Ingress rules (list of CIDR blocks)
+  # Ingress rules for security group
   ingress_with_cidr_blocks:
     - from_port: 3306
       to_port: 3306
       protocol: "tcp"
-      cidr_blocks:
-        - "10.16.0.0/16" # Allow access from entire VPC
+      cidr_blocks: "10.16.0.0/16"  # Must be string, not a list
 
-  # CloudWatch alarm settings
+  # CloudWatch alarm (object)
   alarms:
     enabled: true
     sns_topic: "Default"
@@ -51,17 +48,17 @@ variables:
       statistic: "Average"
       period: 300
 
-  # Tags for RDS instance
+  # Tags for the RDS instance
   tags:
     Environment: "test"
     Project: "Test-Infra-HCL"
     Owner: "mher-test"
 
-# Linked workspace to get outputs from the VPC module
+# Linked workspaces to retrieve outputs (e.g., private subnets)
 linked_workspaces:
   - "1-environments/test/vpc"
 
-# AWS provider settings
+# AWS provider configuration
 providers:
   - name: aws
     version: "~> 5.0"
