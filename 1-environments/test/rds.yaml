@@ -20,22 +20,26 @@ variables:
   publicly_accessible: false
   backup_retention_period: 7
 
-  # Use VPC private subnets (subnet IDs from workspace)
+  # Use private subnets from the linked VPC workspace
   subnet_ids: ${1-environments/test/vpc.private_subnets}
 
-  # Security group settings
+  # Specify VPC ID explicitly to avoid multiple VPC match error
+  vpc_id: ${1-environments/test/vpc.id}
+
+  # Security group settings (create a new one for this RDS)
   create_security_group: true
   security_group_name: "rds-instance-sg"
   security_group_description: "Security group for RDS instance"
 
-  # Ingress rules (VPC CIDR)
+  # Ingress rules (list of CIDR blocks)
   ingress_with_cidr_blocks:
     - from_port: 3306
       to_port: 3306
       protocol: "tcp"
-      cidr_blocks: "10.16.0.0/16"
+      cidr_blocks:
+        - "10.16.0.0/16" # Allow access from entire VPC
 
-  # CloudWatch alarm (object)
+  # CloudWatch alarm settings
   alarms:
     enabled: true
     sns_topic: "Default"
@@ -47,15 +51,17 @@ variables:
       statistic: "Average"
       period: 300
 
-  # Tags
+  # Tags for RDS instance
   tags:
     Environment: "test"
     Project: "Test-Infra-HCL"
     Owner: "mher-test"
 
+# Linked workspace to get outputs from the VPC module
 linked_workspaces:
   - "1-environments/test/vpc"
 
+# AWS provider settings
 providers:
   - name: aws
     version: "~> 5.0"
