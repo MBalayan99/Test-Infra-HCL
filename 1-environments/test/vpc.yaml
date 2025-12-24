@@ -1,6 +1,6 @@
 source: dasmeta/vpc/aws
 version: 1.0.2
-variables:
+variables: 
   name:  "test-vpc"
   availability_zones:
     - "eu-central-1a"
@@ -9,7 +9,7 @@ variables:
   private_subnets:
     - "10.16.1.0/24"
     - "10.16.2.0/24"
-    - "10.16.3.0/24"
+    - "10.16.8.0/24"
   public_subnets:
     - "10.16.4.0/24"
     - "10.16.5.0/24"

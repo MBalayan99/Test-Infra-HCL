@@ -8,7 +8,7 @@ module "this" {
   cidr = "10.16.0.0/16"
   name = "test-vpc"
   private_subnet_tags = {"kubernetes.io/cluster/eks-dev":"shared\"","kubernetes.io/role/internal-elb":"1","kubernetes.sh/discovery":"eks-dev"}
-  private_subnets = ["10.16.1.0/24","10.16.2.0/24","10.16.3.0/24"]
+  private_subnets = ["10.16.1.0/24","10.16.2.0/24","10.16.8.0/24"]
   public_subnet_tags = {"kubernetes.io/cluster/eks-dev":"shared\"","kubernetes.io/role/internal-elb":"1","kubernetes.sh/discovery":"eks-dev"}
   public_subnets = ["10.16.4.0/24","10.16.5.0/24","10.16.6.0/24"]
   providers = {"aws":"aws"}
